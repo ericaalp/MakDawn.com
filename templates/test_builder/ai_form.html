@@ -1,0 +1,45 @@
+{% extends 'core/_dashboard_base.html' %}
+
+{% block title %}AI orqali test yaratish{% endblock %}
+{% block page_title %}🤖 AI orqali test yaratish{% endblock %}
+
+{% block content %}
+{% if not ai_configured %}
+<div class="panel" style="border-color:#fca5a5;background:#fef2f2">
+    <h3>⚠ AI sozlanmagan</h3>
+    <p class="muted">
+        AI generatsiyasi ishlashi uchun <code>ANTHROPIC_API_KEY</code> kerak.
+        <code>D:/MakDawn/.env</code> faylga qo'shing:
+    </p>
+    <pre class="sample">ANTHROPIC_API_KEY=sk-ant-api03-...
+ANTHROPIC_MODEL=claude-sonnet-4-6</pre>
+    <p class="muted small">Keyin server qayta ishga tushiring.</p>
+</div>
+{% endif %}
+
+<div class="panel">
+    <h2>Parametrlar</h2>
+    <p class="muted">AI fan, mavzu va qiyinlik bo'yicha test savollarini avtomatik tuzadi.
+    <strong>Eslatma:</strong> generatsiyadan keyin har bir savolni o'zingiz ko'rib chiqing.</p>
+
+    <form method="post" class="form-stack">
+        {% csrf_token %}
+        <div class="grid-2-cols">
+            {% for field in form %}
+            <div class="form-field {% if field.name == 'sample_text' %}full{% endif %}">
+                <label>{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}<div class="help">{{ field.help_text }}</div>{% endif %}
+                {% if field.errors %}<div class="err">{{ field.errors.0 }}</div>{% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary" {% if not ai_configured %}disabled{% endif %}>
+                ✨ Generatsiya qilish
+            </button>
+            <a href="{% url 'test_builder:create_hub' %}" class="btn btn-ghost">← Orqaga</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

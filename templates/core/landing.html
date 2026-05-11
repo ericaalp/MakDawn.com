@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+
+{% block title %}MaKDawn — Matematik testlar platformasi{% endblock %}
+
+{% block body %}
+<nav class="wiris-nav">
+    <div class="wiris-nav-inner">
+        <a href="{% url 'core:landing' %}" class="wiris-brand">Ma<span>K</span>Dawn</a>
+        <div class="wiris-nav-links">
+            <a href="#products">Mahsulotlar</a>
+            <a href="#solutions">Yechimlar</a>
+            <a href="#about">Biz haqimizda</a>
+            <a href="#contact">Aloqa</a>
+        </div>
+        <div class="wiris-nav-cta wiris-nav-cta-landing">
+            <a href="{% url 'accounts:login' %}" class="wiris-link">Kirish</a>
+            <a href="{% url 'accounts:register' %}" class="wiris-btn wiris-btn-primary">Ro'yxatdan o'tish</a>
+        </div>
+        <button class="hamburger" id="nav-hamburger" aria-label="Menyu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<div class="mobile-nav-overlay" id="mobile-nav-overlay">
+    <div class="mobile-nav-drawer">
+        <button class="mobile-nav-close" id="mobile-nav-close" aria-label="Yopish">✕</button>
+        <a href="#products" class="mobile-nav-item">Mahsulotlar</a>
+        <a href="#solutions" class="mobile-nav-item">Yechimlar</a>
+        <a href="#about" class="mobile-nav-item">Biz haqimizda</a>
+        <a href="#contact" class="mobile-nav-item">Aloqa</a>
+        <div class="mobile-nav-divider"></div>
+        <a href="{% url 'accounts:login' %}" class="mobile-nav-item">Kirish</a>
+        <a href="{% url 'accounts:register' %}" class="mobile-nav-item mobile-nav-cta">Ro'yxatdan o'tish →</a>
+    </div>
+</div>
+
+<header class="wiris-hero">
+    <div class="wiris-hero-inner">
+        <div class="wiris-hero-text">
+            <span class="wiris-eyebrow">MATEMATIK TA'LIM TEXNOLOGIYASI</span>
+            <h1>Matematika testlarini zamonaviy usulda yarating</h1>
+            <p>MaKDawn — o'qituvchilar uchun matematik testlarni yaratish, formulalar bilan ishlash va
+               turli formatlarga eksport qilishning eng qulay platformasi.</p>
+            <div class="wiris-hero-actions">
+                <a href="{% url 'accounts:register' %}" class="wiris-btn wiris-btn-primary wiris-btn-lg">Bepul sinab ko'rish</a>
+                <a href="#products" class="wiris-btn wiris-btn-outline wiris-btn-lg">Batafsil ma'lumot</a>
+            </div>
+        </div>
+        <div class="wiris-hero-visual">
+            <div class="wiris-formula-card">
+                <div class="wiris-formula">∫<sub>0</sub><sup>∞</sup> e<sup>-x²</sup> dx = <span>√π / 2</span></div>
+                <div class="wiris-formula small">f(x) = ax² + bx + c</div>
+                <div class="wiris-formula small">lim<sub>x→0</sub> sin(x)/x = 1</div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section id="products" class="wiris-section">
+    <div class="wiris-container">
+        <span class="wiris-eyebrow center">BIZNING MAHSULOTLARIMIZ</span>
+        <h2 class="wiris-section-title">Matematika uchun to'liq yechim</h2>
+        <div class="wiris-products">
+            <div class="wiris-product">
+                <div class="wiris-product-icon" style="background:#e0f2fe;color:#0369a1;">∑</div>
+                <h3>Test muharriri</h3>
+                <p>LaTeX formulalari bilan ishlovchi kuchli muharrirda matematik testlar yarating.</p>
+                <a href="#" class="wiris-more">Batafsil →</a>
+            </div>
+            <div class="wiris-product">
+                <div class="wiris-product-icon" style="background:#fef3c7;color:#92400e;">⇄</div>
+                <h3>Fayl konvertori</h3>
+                <p>Word, Excel va PDF fayllarni avtomatik ravishda standart test formatiga o'tkazing.</p>
+                <a href="#" class="wiris-more">Batafsil →</a>
+            </div>
+            <div class="wiris-product">
+                <div class="wiris-product-icon" style="background:#dcfce7;color:#166534;">⚡</div>
+                <h3>Variant generatori</h3>
+                <p>Bir savoldan o'nlab noyob variantlarni bir necha soniyada avtomatik hosil qiling.</p>
+                <a href="#" class="wiris-more">Batafsil →</a>
+            </div>
+            <div class="wiris-product">
+                <div class="wiris-product-icon" style="background:#ede9fe;color:#6d28d9;">☁</div>
+                <h3>Bulutli arxiv</h3>
+                <p>Testlaringiz xavfsiz saqlanadi va har qanday qurilmadan ular bilan ishlay olasiz.</p>
+                <a href="#" class="wiris-more">Batafsil →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="solutions" class="wiris-band">
+    <div class="wiris-container wiris-two-col">
+        <div>
+            <span class="wiris-eyebrow">PLATFORMALARGA INTEGRATSIYA</span>
+            <h2>Mavjud tizimingizga bemalol ulanadi</h2>
+            <p>MaKDawn Moodle, HEMIS va boshqa ta'lim platformalari uchun mos formatlarda test eksport qiladi.
+               O'qituvchi yaratgan testlar bir bosishda tizimingizga joylanadi.</p>
+            <a href="{% url 'accounts:register' %}" class="wiris-btn wiris-btn-primary">Hoziroq boshlash</a>
+        </div>
+        <ul class="wiris-checklist">
+            <li>Aiken (.txt) format eksport</li>
+            <li>Moodle XML qo'llab-quvvatlash</li>
+            <li>HEMIS ichki formati</li>
+            <li>PDF va Word chop etish</li>
+            <li>Avtomatik baholash mexanizmi</li>
+        </ul>
+    </div>
+</section>
+
+<section id="about" class="wiris-section">
+    <div class="wiris-container">
+        <div class="wiris-stats">
+            <div class="wiris-stat"><div class="num">10+</div><div class="lbl">Eksport formati</div></div>
+            <div class="wiris-stat"><div class="num">∞</div><div class="lbl">Formulalar imkoniyati</div></div>
+            <div class="wiris-stat"><div class="num">1</div><div class="lbl">Bosishda eksport</div></div>
+            <div class="wiris-stat"><div class="num">24/7</div><div class="lbl">Bulutli ishonchli saqlash</div></div>
+        </div>
+    </div>
+</section>
+
+<section class="wiris-cta-band">
+    <div class="wiris-container">
+        <h2>Matematik testlarni bugunoq yarating</h2>
+        <p>Ro'yxatdan o'ting va MaKDawn ning barcha imkoniyatlaridan foydalaning.</p>
+        <a href="{% url 'accounts:register' %}" class="wiris-btn wiris-btn-white wiris-btn-lg">Ro'yxatdan o'tish</a>
+    </div>
+</section>
+
+<footer id="contact" class="wiris-footer">
+    <div class="wiris-container wiris-footer-grid">
+        <div>
+            <div class="wiris-brand dark">Ma<span>K</span>Dawn</div>
+            <p class="muted">Matematik ta'lim uchun zamonaviy vosita.</p>
+        </div>
+        <div>
+            <h4>Mahsulot</h4>
+            <a href="#products">Test muharriri</a>
+            <a href="#products">Konvertor</a>
+            <a href="#products">Arxiv</a>
+        </div>
+        <div>
+            <h4>Kompaniya</h4>
+            <a href="#about">Biz haqimizda</a>
+            <a href="#contact">Aloqa</a>
+        </div>
+        <div>
+            <h4>Hisob</h4>
+            <a href="{% url 'accounts:login' %}">Kirish</a>
+            <a href="{% url 'accounts:register' %}">Ro'yxatdan o'tish</a>
+        </div>
+    </div>
+    <div class="wiris-copy">© 2026 MaKDawn. Barcha huquqlar himoyalangan.</div>
+</footer>
+
+{% block extra_js %}
+<script>
+(function () {
+    var hamburger = document.getElementById('nav-hamburger');
+    var overlay   = document.getElementById('mobile-nav-overlay');
+    var closeBtn  = document.getElementById('mobile-nav-close');
+
+    function openMenu()  { overlay.classList.add('open');    document.body.style.overflow = 'hidden'; }
+    function closeMenu() { overlay.classList.remove('open'); document.body.style.overflow = ''; }
+
+    hamburger.addEventListener('click', openMenu);
+    closeBtn.addEventListener('click', closeMenu);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) closeMenu(); });
+
+    overlay.querySelectorAll('.mobile-nav-item').forEach(function (a) {
+        a.addEventListener('click', closeMenu);
+    });
+})();
+</script>
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,120 @@
+{% extends 'core/_dashboard_base.html' %}
+
+{% block title %}Test yaratish — MaKDawn{% endblock %}
+{% block page_title %}Test yaratish{% endblock %}
+
+{% block content %}
+<div class="dg-wrap">
+
+    <section class="dg-hero">
+        <span class="dg-eyebrow">RAQAMLI TEST YARATUVCHI</span>
+        <h1>Testingizni bir bosishda <span>raqamlashtiring</span></h1>
+        <p>Word, PDF yoki Excel faylingizni yuklang — MaKDawn savollarni avtomatik ajratib,
+           tizimingizga mos formatga aylantiradi. Yoki qo'lda yarating yoki AI'dan foydalaning.</p>
+    </section>
+
+    <section class="dg-upload-card">
+        <a href="{% url 'converter:upload' %}" class="dg-drop">
+            <div class="dg-drop-icon">
+                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+            </div>
+            <h2>Faylingizni bu yerga yuklang</h2>
+            <p class="dg-drop-sub">.docx, .pdf, .xlsx, .txt — maks. 10 MB</p>
+            <span class="dg-btn dg-btn-primary dg-btn-lg">Fayl tanlash</span>
+            <p class="dg-drop-hint">yoki faylni shu maydonga sudrab tashlang</p>
+        </a>
+
+        <div class="dg-formats">
+            <span class="dg-format-label">Qabul qilinadi</span>
+            <span class="dg-format-chip">DOCX</span>
+            <span class="dg-format-chip">PDF</span>
+            <span class="dg-format-chip">XLSX</span>
+            <span class="dg-format-chip">TXT</span>
+        </div>
+    </section>
+
+    <section class="dg-methods">
+        <div class="dg-methods-head">
+            <h2>Yoki boshqa usulni tanlang</h2>
+            <p class="muted">Qanday boshlashingizdan qat'i nazar, natija bir xil — eksportga tayyor test.</p>
+        </div>
+        <div class="dg-methods-grid">
+            <a href="{% url 'test_builder:create' %}" class="dg-method">
+                <div class="dg-method-icon" style="background:#e0f2fe;color:#0369a1;">✎</div>
+                <h3>Qo'lda kiritish</h3>
+                <p>Savollarni bosqichma-bosqich o'zingiz yozing. LaTeX formulalari qo'llab-quvvatlanadi.</p>
+                <span class="dg-method-cta">Yaratishni boshlash →</span>
+            </a>
+            <a href="{% url 'converter:upload' %}" class="dg-method featured">
+                <span class="dg-badge-top">Eng mashhur</span>
+                <div class="dg-method-icon" style="background:#dbeafe;color:#1d4ed8;">⇪</div>
+                <h3>Fayldan yuklash</h3>
+                <p>Word, PDF yoki Excel faylni yuklang — tizim savollarni o'zi ajratadi.</p>
+                <span class="dg-method-cta">Yuklashni boshlash →</span>
+            </a>
+            <a href="{% url 'test_builder:ai_generate' %}" class="dg-method">
+                <div class="dg-method-icon" style="background:#ede9fe;color:#6d28d9;">✦</div>
+                <h3>AI orqali yaratish</h3>
+                <p>Fan va mavzu bering — sun'iy intellekt sifatli savollar to'plamini yaratadi.</p>
+                <span class="dg-method-cta">AI bilan boshlash →</span>
+            </a>
+        </div>
+    </section>
+
+    <section class="dg-flow">
+        <h2>Uch qadamli jarayon</h2>
+        <div class="dg-flow-grid">
+            <div class="dg-flow-step">
+                <div class="dg-flow-num">01</div>
+                <h3>Yuklang</h3>
+                <p>Faylni sudrab tashlang yoki qo'lda yarating. Formulalar, rasmlar va jadvallar saqlanadi.</p>
+            </div>
+            <div class="dg-flow-arrow">→</div>
+            <div class="dg-flow-step">
+                <div class="dg-flow-num">02</div>
+                <h3>Ko'rib chiqing</h3>
+                <p>Avtomatik ajratilgan savollarni muharrirda tahrir qiling, javoblarni belgilang.</p>
+            </div>
+            <div class="dg-flow-arrow">→</div>
+            <div class="dg-flow-step">
+                <div class="dg-flow-num">03</div>
+                <h3>Eksport qiling</h3>
+                <p>Istalgan formatni tanlab yuklab oling — HEMIS, Moodle yoki Aiken.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="dg-support">
+        <div class="dg-support-col">
+            <span class="dg-eyebrow">QO'LLAB-QUVVATLANADIGAN</span>
+            <h2>Savol turlari</h2>
+            <div class="dg-tags">
+                <span class="dg-tag">Yagona tanlov</span>
+                <span class="dg-tag">Ko'p tanlovli</span>
+                <span class="dg-tag">To'g'ri/Noto'g'ri</span>
+                <span class="dg-tag">Bo'sh joy to'ldirish</span>
+                <span class="dg-tag">Qisqa javob</span>
+                <span class="dg-tag">Formulalar (LaTeX)</span>
+                <span class="dg-tag">Rasmli savollar</span>
+            </div>
+        </div>
+        <div class="dg-support-col">
+            <span class="dg-eyebrow">EKSPORT FORMATLARI</span>
+            <h2>Har qanday platformaga</h2>
+            <div class="dg-platforms">
+                <div class="dg-platform">HEMIS XML</div>
+                <div class="dg-platform">Moodle XML</div>
+                <div class="dg-platform">Aiken TXT</div>
+                <div class="dg-platform">PDF</div>
+                <div class="dg-platform">Word</div>
+                <div class="dg-platform">JSON</div>
+            </div>
+        </div>
+    </section>
+
+</div>
+{% endblock %}

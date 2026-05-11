@@ -1,0 +1,33 @@
+{% extends 'core/_dashboard_base.html' %}
+
+{% block title %}Sozlamalar{% endblock %}
+{% block page_title %}⚙️ Sozlamalar{% endblock %}
+
+{% block content %}
+<div class="panel">
+    <h2>Profil ma'lumotlari</h2>
+    <form method="post" enctype="multipart/form-data" class="form-stack">
+        {% csrf_token %}
+        <div class="grid-2-cols">
+            {% for field in form %}
+            <div class="form-field {% if field.name == 'avatar' %}full{% endif %}">
+                <label>{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}<div class="err">{{ field.errors.0 }}</div>{% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Saqlash</button>
+        </div>
+    </form>
+</div>
+
+<div class="panel">
+    <h3>Hisob</h3>
+    <dl class="info-list">
+        <dt>Login</dt><dd>{{ request.user.username }}</dd>
+        <dt>Qo'shilgan</dt><dd>{{ request.user.date_joined|date:"d.m.Y" }}</dd>
+    </dl>
+</div>
+{% endblock %}

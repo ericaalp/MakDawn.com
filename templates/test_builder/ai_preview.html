@@ -1,0 +1,56 @@
+{% extends 'core/_dashboard_base.html' %}
+
+{% block title %}AI natijasi — preview{% endblock %}
+{% block page_title %}AI yaratgan savollar{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+{% endblock %}
+
+{% block content %}
+<div class="panel">
+    <p class="muted">
+        Fan: <strong>{{ data.subject }}</strong> ·
+        Mavzu: <strong>{{ data.topic }}</strong> ·
+        Savollar: <strong>{{ questions|length }}</strong>
+    </p>
+    <p class="muted small">⚠ AI yaratgan savollarni o'qib chiqing — xato bo'lishi mumkin. Saqlagandan keyin "Mening testlarim" bo'limida tahrirlay olasiz.</p>
+
+    <form method="post" action="{% url 'test_builder:ai_save' token %}" class="form-stack">
+        {% csrf_token %}
+        <div class="form-field">
+            <label>Test nomi</label>
+            <input type="text" name="title" class="form-control"
+                   value="{{ data.subject }} — {{ data.topic }}" required>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">✓ Testga saqlash</button>
+            <a href="{% url 'test_builder:ai_generate' %}" class="btn btn-ghost">↻ Qayta yaratish</a>
+        </div>
+    </form>
+</div>
+
+<div class="panel">
+    <ol class="q-list">
+        {% for q in questions %}
+        <li class="q-item">
+            <div class="q-text">{{ q.text }}</div>
+            <ul class="q-choices">
+                {% for c in q.choices %}
+                <li class="{% if c.is_correct %}correct{% endif %}">
+                    {{ c.text }}
+                    {% if c.is_correct %}<span class="ok">✓</span>{% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+            {% if q.explanation %}
+            <div class="q-explain"><strong>Yechim:</strong> {{ q.explanation }}</div>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ol>
+</div>
+{% endblock %}

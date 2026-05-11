@@ -1,0 +1,210 @@
+{% extends 'core/_dashboard_base.html' %}
+
+{% block title %}Fayl konvertori — MaKDawn{% endblock %}
+{% block page_title %}Fayl konvertori{% endblock %}
+
+{% block content %}
+<div class="dg-wrap">
+
+    <section class="dg-hero">
+        <span class="dg-eyebrow">HEMIS · MOODLE · MATN</span>
+        <h1>Faylingizni <span>testga</span> aylantiring</h1>
+        <p>Word, PDF, Excel yoki rasm faylingizni yuklang — AI savollarni avtomatik ajratib,
+           HEMIS ga tayyor formatga o'tkazadi. Formulali savollar rasm sifatida saqlanadi.</p>
+    </section>
+
+    <section class="dg-upload-card">
+        <form method="post" enctype="multipart/form-data" id="upload-form">
+            {% csrf_token %}
+            <label for="{{ form.file.id_for_label }}" class="dg-drop" id="drop-zone">
+                <div class="dg-drop-icon">
+                    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="17 8 12 3 7 8"/>
+                        <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                </div>
+                <h2 id="drop-label">Faylni bu yerga sudrab tashlang</h2>
+                <p class="dg-drop-sub">.docx, .pdf, .xlsx, .txt, .png, .jpg — maks. 10 MB</p>
+                {{ form.file }}
+                <span class="dg-btn dg-btn-primary dg-btn-lg" id="choose-btn">Fayl tanlash</span>
+                <p class="dg-drop-hint">yoki faylni shu maydonga sudrab tashlang</p>
+                {% if form.file.errors %}<p class="err" style="margin-top:10px;">{{ form.file.errors.0 }}</p>{% endif %}
+            </label>
+
+            <div style="max-width:560px;margin:20px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                <div class="form-field">
+                    <label>{{ form.subject_name.label }}</label>
+                    {{ form.subject_name }}
+                    {% if form.subject_name.errors %}<div class="err">{{ form.subject_name.errors.0 }}</div>{% endif %}
+                </div>
+                <div class="form-field">
+                    <label>{{ form.test_title.label }}</label>
+                    {{ form.test_title }}
+                    {% if form.test_title.errors %}<div class="err">{{ form.test_title.errors.0 }}</div>{% endif %}
+                </div>
+            </div>
+
+            <div style="text-align:center;margin:20px 0 8px;">
+                <button type="submit" class="dg-btn dg-btn-primary dg-btn-lg" id="submit-btn">
+                    Yuklash va testga aylantirish
+                </button>
+            </div>
+        </form>
+
+        <div class="dg-formats">
+            <span class="dg-format-label">Qabul qilinadi</span>
+            <span class="dg-format-chip">DOCX</span>
+            <span class="dg-format-chip">PDF</span>
+            <span class="dg-format-chip">XLSX</span>
+            <span class="dg-format-chip">TXT</span>
+            <span class="dg-format-chip">PNG / JPG</span>
+        </div>
+    </section>
+
+    <!-- Qo'llab-quvvatlanadigan formatlar -->
+    <section class="dg-flow" style="margin-bottom:40px;">
+        <h2>Qanday fayllar ishlaydi?</h2>
+        <div class="dg-flow-grid">
+            <div class="dg-flow-step">
+                <div class="dg-flow-num">DOCX / TXT</div>
+                <h3>Raqamlangan yoki oddiy savollar</h3>
+                <pre class="sample" style="font-size:12px;margin:0;">1. Savol matni?
+A) Variant
+*B) To'g'ri javob
+C) Variant
+D) Variant</pre>
+                <p style="font-size:12px;color:#5b6b7d;margin-top:8px;">
+                    * yoki # belgisi to'g'ri javobni bildiradi.<br>
+                    <code>ANSWER: B</code> qatori ham ishlaydi.
+                </p>
+            </div>
+            <div class="dg-flow-arrow">→</div>
+            <div class="dg-flow-step">
+                <div class="dg-flow-num">PDF / RASM</div>
+                <h3>Formulali va rasmli savollar</h3>
+                <p style="font-size:13px;color:#5b6b7d;">
+                    AI (GPT-4o) formulalarni o'qib LaTeX ga o'tkazadi.
+                    Eksport paytida formulalar avtomatik <strong>PNG rasm</strong> sifatida
+                    Moodle XML ichiga joylashtiriladi — HEMIS to'g'ri ko'rsatadi.
+                </p>
+            </div>
+            <div class="dg-flow-arrow">→</div>
+            <div class="dg-flow-step">
+                <div class="dg-flow-num">XLSX</div>
+                <h3>Excel jadval formati</h3>
+                <p style="font-size:13px;color:#5b6b7d;">
+                    <strong>A ustun</strong> — savol matni<br>
+                    <strong>B ustun</strong> — to'g'ri javob harfi (A, B, C...)<br>
+                    <strong>C–F ustunlar</strong> — variant matnlari
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Eksport formatlari haqida -->
+    <section style="margin-bottom:40px;">
+        <div class="panel">
+            <h3 style="margin-bottom:12px;">Eksport formatlari</h3>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;">
+                <div style="padding:14px;background:var(--surface-alt);border-radius:8px;border:1px solid var(--border);">
+                    <div style="font-weight:700;margin-bottom:4px;">📄 Moodle XML</div>
+                    <div style="font-size:13px;color:#5b6b7d;">
+                        Formulalar PNG rasm sifatida joylashgan.
+                        HEMIS ga <strong>"Moodle" turi</strong> bilan import qiling.
+                        <span style="color:#166534;font-weight:600;">Tavsiya etiladi!</span>
+                    </div>
+                </div>
+                <div style="padding:14px;background:var(--surface-alt);border-radius:8px;border:1px solid var(--border);">
+                    <div style="font-weight:700;margin-bottom:4px;">🗂 HEMIS XML</div>
+                    <div style="font-size:13px;color:#5b6b7d;">
+                        HEMIS ning o'z XML formati. Formulalar rasm sifatida joylashgan.
+                    </div>
+                </div>
+                <div style="padding:14px;background:var(--surface-alt);border-radius:8px;border:1px solid var(--border);">
+                    <div style="font-weight:700;margin-bottom:4px;">📝 HEMIS matn (.txt)</div>
+                    <div style="font-size:13px;color:#5b6b7d;">
+                        ++++ / ==== formatida oddiy matn. Formulalar LaTeX matn
+                        sifatida qoladi (oddiy savollar uchun).
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% if jobs %}
+    <section>
+        <div class="panel">
+            <h3 style="margin-bottom:16px;">Oxirgi yuklangan fayllar</h3>
+            <table class="simple-table">
+                <thead>
+                    <tr><th>Fayl</th><th>Holat</th><th>Savollar</th><th>Sana</th><th></th></tr>
+                </thead>
+                <tbody>
+                    {% for job in jobs %}
+                    <tr>
+                        <td>{{ job.original_name }}</td>
+                        <td><span class="chip chip-{{ job.status }}">{{ job.get_status_display }}</span></td>
+                        <td>{{ job.parsed_count }}</td>
+                        <td class="muted small">{{ job.created_at|date:"d.m.Y H:i" }}</td>
+                        <td>
+                            {% if job.test %}
+                                <a href="{% url 'test_builder:detail' job.test.pk %}" class="btn btn-ghost" style="padding:4px 10px;font-size:12px;">
+                                    Tahrirlash / Yuklab olish →
+                                </a>
+                            {% elif job.status == 'failed' %}
+                                <span class="muted small" title="{{ job.error }}">{{ job.error|truncatechars:50 }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    {% endif %}
+
+</div>
+
+<style>
+    #{{ form.file.id_for_label }} { display: none; }
+    #drop-zone.drag-over { border-color: var(--w-primary, #0b3d91); background: linear-gradient(180deg, #eff4ff 0%, #fff 100%); }
+    #submit-btn.loading { opacity: 0.7; pointer-events: none; }
+</style>
+
+<script>
+(function () {
+    const input  = document.getElementById('{{ form.file.id_for_label }}');
+    const zone   = document.getElementById('drop-zone');
+    const label  = document.getElementById('drop-label');
+    const btn    = document.getElementById('choose-btn');
+    const form   = document.getElementById('upload-form');
+    const submit = document.getElementById('submit-btn');
+
+    if (!input || !zone) return;
+
+    btn.addEventListener('click', function (e) { e.preventDefault(); input.click(); });
+
+    input.addEventListener('change', function () {
+        if (input.files.length) label.textContent = input.files[0].name;
+    });
+
+    zone.addEventListener('dragover',  function (e) { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', function ()  { zone.classList.remove('drag-over'); });
+    zone.addEventListener('drop', function (e) {
+        e.preventDefault();
+        zone.classList.remove('drag-over');
+        const dt = e.dataTransfer;
+        if (dt && dt.files.length) {
+            input.files = dt.files;
+            label.textContent = dt.files[0].name;
+        }
+    });
+
+    form.addEventListener('submit', function () {
+        submit.textContent = 'AI tahlil qilmoqda... iltimos kuting';
+        submit.classList.add('loading');
+    });
+})();
+</script>
+{% endblock %}

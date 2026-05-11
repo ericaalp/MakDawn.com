@@ -1,0 +1,43 @@
+{% extends 'core/_dashboard_base.html' %}
+
+{% block title %}Bosh sahifa — MaKDawn{% endblock %}
+{% block page_title %}Bosh sahifa{% endblock %}
+
+{% block content %}
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-value">{{ stats.tests_count }}</div>
+        <div class="stat-label">Yaratilgan testlar</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ stats.questions_count }}</div>
+        <div class="stat-label">Jami savollar</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ stats.converted_count }}</div>
+        <div class="stat-label">Konvertatsiya qilingan fayllar</div>
+    </div>
+</div>
+
+
+{% if recent_tests %}
+<div class="panel">
+    <h2>Oxirgi faoliyat</h2>
+    <table class="simple-table">
+        <thead>
+            <tr><th>Test</th><th>Fan</th><th>Savollar</th><th>Yangilandi</th></tr>
+        </thead>
+        <tbody>
+            {% for t in recent_tests %}
+            <tr>
+                <td><a href="{% url 'test_builder:detail' t.pk %}" class="link">{{ t.title }}</a></td>
+                <td>{{ t.subject.name|default:"—" }}</td>
+                <td>{{ t.q_count }}</td>
+                <td class="muted small">{{ t.updated_at|date:"d.m.Y H:i" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endblock %}

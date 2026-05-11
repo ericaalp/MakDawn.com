@@ -1,0 +1,123 @@
+{% extends 'core/_dashboard_base.html' %}
+
+{% block title %}{{ test.title }}{% endblock %}
+{% block page_title %}{{ test.title }}{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+{% endblock %}
+
+{% block content %}
+
+<!-- Test sarlavhasi -->
+<div class="panel">
+    <div class="detail-head">
+        <div>
+            <div class="test-meta">
+                <span>📚 {{ test.subject.name|default:"Fan ko'rsatilmagan" }}</span>
+                <span>❓ {{ test.question_count }} ta savol</span>
+                <span>⭐ {{ test.total_points }} ball</span>
+            </div>
+            {% if test.description %}
+            <p class="muted" style="margin-top:8px;font-size:13px;">{{ test.description }}</p>
+            {% endif %}
+        </div>
+        <div class="detail-actions">
+            <a href="{% url 'test_builder:edit' test.pk %}"
+               class="btn btn-ghost" style="padding:8px 12px;font-size:18px;line-height:1;" title="Test nomini tahrirlash">✎</a>
+            <a href="{% url 'test_builder:question_create' test.pk %}" class="btn btn-primary">+ Savol qo'shish</a>
+        </div>
+    </div>
+</div>
+
+<!-- Savollar -->
+{% if questions %}
+<div class="panel">
+    <h2 style="margin-bottom:16px;">Savollar</h2>
+    <ol class="q-list">
+        {% for q in questions %}
+        <li class="q-item">
+            <div class="q-head">
+                <div class="q-text">{{ q.text|linebreaksbr }}</div>
+                <div class="q-meta">
+                    <span class="chip">{{ q.get_qtype_display }}</span>
+                    <span class="chip">{{ q.points }} ball</span>
+                </div>
+            </div>
+
+            {% if q.image %}
+            <div style="margin:8px 0 10px;">
+                <img src="{{ q.image.url }}" alt="Savol rasmi"
+                     style="max-width:100%;max-height:260px;border-radius:8px;border:1px solid var(--border);">
+            </div>
+            {% endif %}
+
+            <ul class="q-choices">
+                {% for c in q.choices.all %}
+                <li class="{% if c.is_correct %}correct{% endif %}">
+                    <span style="flex:1">
+                        {% if c.text %}{{ c.text }}{% endif %}
+                        {% if c.image %}
+                        <img src="{{ c.image.url }}" alt="Variant rasmi"
+                             style="display:block;max-width:100%;max-height:120px;border-radius:4px;margin-top:{% if c.text %}4px{% else %}0{% endif %}">
+                        {% endif %}
+                    </span>
+                    {% if c.is_correct %}<span class="ok">✓</span>{% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+
+            <div class="q-actions">
+                <a href="{% url 'test_builder:question_edit' q.pk %}" class="link">✎ Tahrirlash</a>
+                <form method="post" action="{% url 'test_builder:question_delete' q.pk %}"
+                      onsubmit="return confirm('Savolni o\'chirasizmi?')" style="display:inline">
+                    {% csrf_token %}
+                    <button type="submit" class="link danger">O'chirish</button>
+                </form>
+            </div>
+        </li>
+        {% endfor %}
+    </ol>
+</div>
+{% else %}
+<div class="panel empty">
+    <p class="muted">Testda hali savollar yo'q.</p>
+    <a href="{% url 'test_builder:question_create' test.pk %}" class="btn btn-primary">+ Birinchi savolni qo'shish</a>
+</div>
+{% endif %}
+
+<!-- Eksport -->
+{% if questions %}
+<div class="panel" style="border-color:#2563eb;background:#f0f7ff;">
+    <h2 style="margin:0 0 6px;color:#1d4ed8;">⬇ HEMIS ga eksport</h2>
+    <p class="muted" style="font-size:13px;margin-bottom:14px;">
+        Formulali savollar uchun <strong>Moodle XML</strong> tavsiya etiladi —
+        formulalar PNG rasm sifatida joylashgan, HEMIS da to'g'ri ko'rinadi.
+    </p>
+    <div class="export-row">
+        <a href="{% url 'test_builder:export' test.pk 'moodle' %}" class="btn btn-primary">⬇ Moodle XML</a>
+        <a href="{% url 'test_builder:export' test.pk 'hemis' %}" class="btn btn-ghost">⬇ HEMIS XML</a>
+        <a href="{% url 'test_builder:export' test.pk 'hemis_txt' %}" class="btn btn-ghost">⬇ HEMIS matn (.txt)</a>
+    </div>
+    <div style="margin-top:12px;padding:10px 14px;background:#dbeafe;border-radius:8px;font-size:13px;color:#1e40af;">
+        💡 HEMIS: <strong>Savollar → Import → Moodle XML</strong> turini tanlang.
+    </div>
+</div>
+{% endif %}
+
+<!-- O'chirish -->
+<div class="panel danger-zone">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+        <span style="font-size:13px;color:#991b1b;">Testni butunlay o'chirish — qaytarib bo'lmaydi.</span>
+        <form method="post" action="{% url 'test_builder:delete' test.pk %}"
+              onsubmit="return confirm('Testni o\'chirasizmi? Barcha savollar ham o\'chib ketadi.')">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Testni o'chirish</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

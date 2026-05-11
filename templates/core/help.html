@@ -1,0 +1,365 @@
+{% extends 'core/_dashboard_base.html' %}
+
+{% block title %}Yordam markazi{% endblock %}
+{% block page_title %}Yordam markazi{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero -->
+<div class="h-hero">
+    <div class="h-eyebrow">YORDAM MARKAZI</div>
+    <h1 class="h-title">MakDawn bilan ishlashni o'rganing</h1>
+    <p class="h-sub">Fayl yuklash, qo'lda kiritish yoki AI orqali — istalgan usulda HEMIS uchun professional testlar yarating</p>
+    <div class="h-qnav">
+        <a href="#file" class="h-qcard">
+            <div class="h-qcard-ico" style="background:#dbeafe;color:#1d4ed8">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="20" height="20">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"/>
+                </svg>
+            </div>
+            <div><div class="h-qcard-title">Fayl yuklash</div><div class="h-qcard-sub">DOCX · PDF · Excel · Rasm</div></div>
+        </a>
+        <a href="#manual" class="h-qcard">
+            <div class="h-qcard-ico" style="background:#ede9fe;color:#6d28d9">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="20" height="20">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"/>
+                </svg>
+            </div>
+            <div><div class="h-qcard-title">Qo'lda yaratish</div><div class="h-qcard-sub">To'liq nazorat · LaTeX</div></div>
+        </a>
+        <a href="#ai" class="h-qcard">
+            <div class="h-qcard-ico" style="background:#dcfce7;color:#15803d">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="20" height="20">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z"/>
+                </svg>
+            </div>
+            <div><div class="h-qcard-title">AI orqali</div><div class="h-qcard-sub">Avtomatik generatsiya</div></div>
+        </a>
+        <a href="#export" class="h-qcard">
+            <div class="h-qcard-ico" style="background:#fef3c7;color:#b45309">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="20" height="20">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"/>
+                </svg>
+            </div>
+            <div><div class="h-qcard-title">HEMIS Eksport</div><div class="h-qcard-sub">3 format · Import yo'riqnoma</div></div>
+        </a>
+    </div>
+</div>
+
+<!-- ======================================================
+     USUL 1: Fayl yuklash
+     ====================================================== -->
+<div class="panel" id="file">
+    <div class="h-badge" style="background:#dbeafe;color:#1d4ed8">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="12" height="12">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"/>
+        </svg>
+        USUL 1
+    </div>
+    <h2 style="margin-bottom:6px">Fayl yuklash orqali</h2>
+    <p class="muted" style="margin-bottom:4px">Mavjud savol faylini yuklang — tizim AI orqali avtomatik tahlil qilib, HEMIS formatida testni saqlaydi.</p>
+
+    <div class="h-steps">
+        <div class="h-step">
+            <div class="h-step-n" style="--nc-bg:#dbeafe;--nc:#1d4ed8">1</div>
+            <div class="h-step-body">
+                <h4>Fayl konvertatsiya bo'limiga o'ting</h4>
+                <p>Chap menudagi <strong>Fayl konvertatsiya</strong> bo'limini bosing.</p>
+            </div>
+        </div>
+        <div class="h-step">
+            <div class="h-step-n" style="--nc-bg:#dbeafe;--nc:#1d4ed8">2</div>
+            <div class="h-step-body">
+                <h4>Fan nomini kiriting (ixtiyoriy)</h4>
+                <p>Test yaratilganda shu fanga avtomatik bog'lanadi. Masalan: <em>Oliy matematika</em>.</p>
+            </div>
+        </div>
+        <div class="h-step">
+            <div class="h-step-n" style="--nc-bg:#dbeafe;--nc:#1d4ed8">3</div>
+            <div class="h-step-body">
+                <h4>Faylni tanlang va yuklang</h4>
+                <p>GPT-4o faylni tahlil qilib savollarni ajratib oladi. Rasm fayllarda formulalar ham taniladi.</p>
+            </div>
+        </div>
+        <div class="h-step">
+            <div class="h-step-n" style="--nc-bg:#dbeafe;--nc:#1d4ed8">4</div>
+            <div class="h-step-body">
+                <h4>Test detail sahifasiga o'tasiz</h4>
+                <p>Savollarni ko'rib chiqing, tahrirlang, so'ngra HEMIS ga eksport qiling.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="h-fmts">
+        <span class="h-fmts-lbl">Formatlar:</span>
+        <span class="h-fmt" style="--fc:#1d4ed8;--fc-bg:#dbeafe">DOCX</span>
+        <span class="h-fmt" style="--fc:#dc2626;--fc-bg:#fee2e2">PDF</span>
+        <span class="h-fmt" style="--fc:#15803d;--fc-bg:#dcfce7">XLSX</span>
+        <span class="h-fmt" style="--fc:#6d28d9;--fc-bg:#ede9fe">TXT</span>
+        <span class="h-fmt" style="--fc:#b45309;--fc-bg:#fef3c7">PNG / JPG</span>
+    </div>
+
+    <div class="h-tip" style="--tip-bg:#dbeafe;--tip-c:#1e40af">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.7" stroke="currentColor" width="17" height="17">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"/>
+        </svg>
+        <span><strong>Maslahat:</strong> Rasm fayllarida GPT-4o Vision matnni taniydi. Excel faylda A ustun savol, B ustun to'g'ri javob harfi, C–F ustunlar variantlar.</span>
+    </div>
+
+    <a href="{% url 'converter:upload' %}" class="btn btn-primary" style="margin-top:20px">Fayl yuklash →</a>
+</div>
+
+<!-- ======================================================
+     USUL 2: Qo'lda yaratish
+     ====================================================== -->
+<div class="panel" id="manual">
+    <div class="h-badge" style="background:#ede9fe;color:#6d28d9">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="12" height="12">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Z"/>
+        </svg>
+        USUL 2
+    </div>
+    <h2 style="margin-bottom:6px">Qo'lda test yaratish</h2>
+    <p class="muted" style="margin-bottom:4px">Har bir savolni o'zingiz kiriting. Matematik formulalar, rasmlar va bir nechta to'g'ri javoblar qo'llab-quvvatlanadi.</p>
+
+    <div class="h-steps">
+        <div class="h-step">
+            <div class="h-step-n" style="--nc-bg:#ede9fe;--nc:#6d28d9">1</div>
+            <div class="h-step-body">
+                <h4>Yangi test yarating</h4>
+                <p><strong>Mening testlarim → + Yangi test</strong> tugmasini bosing. Test nomi va fan nomini kiriting.</p>
+            </div>
+        </div>
+        <div class="h-step">
+            <div class="h-step-n" style="--nc-bg:#ede9fe;--nc:#6d28d9">2</div>
+            <div class="h-step-body">
+                <h4>Savol matnini kiriting</h4>
+                <p>Matematik formulalar uchun <code>$...$</code> (inline) yoki <code>$$...$$</code> (katta blok) sintaksisini ishlating.</p>
+                <div class="h-fex-row">
+                    <span class="h-fex"><code>$\frac{a}{b}$</code><span class="h-fex-sep">→</span>$\frac{a}{b}$</span>
+                    <span class="h-fex"><code>$x^2+y^2$</code><span class="h-fex-sep">→</span>$x^2+y^2$</span>
+                    <span class="h-fex"><code>$\int_0^1 x\,dx$</code><span class="h-fex-sep">→</span>$\int_0^1 x\,dx$</span>
+                    <span class="h-fex"><code>$\sqrt{x}$</code><span class="h-fex-sep">→</span>$\sqrt{x}$</span>
+                </div>
+            </div>
+        </div>
+        <div class="h-step">
+            <div class="h-step-n" style="--nc-bg:#ede9fe;--nc:#6d28d9">3</div>
+            <div class="h-step-body">
+                <h4>Rasm qo'shing (ixtiyoriy)</h4>
+                <p>Geometrik yoki formulali rasmlarni to'g'ridan-to'g'ri yuklang. Eksportda Moodle XML ichiga base64 sifatida joylashadi.</p>
+            </div>
+        </div>
+        <div class="h-step">
+            <div class="h-step-n" style="--nc-bg:#ede9fe;--nc:#6d28d9">4</div>
+            <div class="h-step-body">
+                <h4>Javob variantlarini kiriting</h4>
+                <p>Kamida 2 ta variant kiriting. To'g'ri javobni ✓ bilan belgilang. Variant faqat matn <em>yoki</em> faqat rasm bo'lishi ham mumkin.</p>
+            </div>
+        </div>
+        <div class="h-step">
+            <div class="h-step-n" style="--nc-bg:#ede9fe;--nc:#6d28d9">5</div>
+            <div class="h-step-body">
+                <h4>Saqlash va davom etish</h4>
+                <p><strong>"Saqlash va yana qo'shish"</strong> tugmasi yangi savol formasini ochadi — ketma-ket kiritish uchun qulay.</p>
+            </div>
+        </div>
+    </div>
+
+    <a href="{% url 'test_builder:create_hub' %}" class="btn btn-primary" style="margin-top:20px;background:#7c3aed;border-color:#7c3aed">Yangi test yaratish →</a>
+</div>
+
+<!-- ======================================================
+     USUL 3: AI orqali
+     ====================================================== -->
+<div class="panel" id="ai">
+    <div class="h-badge" style="background:#dcfce7;color:#15803d">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="12" height="12">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z"/>
+        </svg>
+        USUL 3
+    </div>
+    <h2 style="margin-bottom:6px">AI orqali generatsiya</h2>
+    <p class="muted" style="margin-bottom:4px">Fan va mavzuni kiriting — GPT-4o bir necha soniyada professional savollar to'plamini tayyorlaydi.</p>
+
+    <div class="h-steps">
+        <div class="h-step">
+            <div class="h-step-n" style="--nc-bg:#dcfce7;--nc:#15803d">1</div>
+            <div class="h-step-body">
+                <h4>AI generatsiyaga o'ting</h4>
+                <p><strong>Test yaratish → AI orqali yaratish</strong> bo'limini tanlang.</p>
+            </div>
+        </div>
+        <div class="h-step">
+            <div class="h-step-n" style="--nc-bg:#dcfce7;--nc:#15803d">2</div>
+            <div class="h-step-body">
+                <h4>Parametrlarni to'ldiring</h4>
+                <p><strong>Fan nomi</strong>, <strong>Mavzu</strong>, <strong>Savollar soni</strong> (3–30 ta), <strong>Qiyinlik darajasi</strong>ni kiriting.</p>
+            </div>
+        </div>
+        <div class="h-step">
+            <div class="h-step-n" style="--nc-bg:#dcfce7;--nc:#15803d">3</div>
+            <div class="h-step-body">
+                <h4>Namuna matn qo'shing (ixtiyoriy)</h4>
+                <p>O'z uslubingizdagi mavjud savollarni namuna sifatida kiriting — AI shu uslubda yangi savollar yaratadi.</p>
+            </div>
+        </div>
+        <div class="h-step">
+            <div class="h-step-n" style="--nc-bg:#dcfce7;--nc:#15803d">4</div>
+            <div class="h-step-body">
+                <h4>Natijani ko'rib chiqing va saqlang</h4>
+                <p>Generatsiya tugagach savollar ko'rinadi. Tekshirib, test nomini kiriting va <strong>"Testga saqlash"</strong> tugmasini bosing.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="h-tip" style="--tip-bg:#fef3c7;--tip-c:#92400e">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.7" stroke="currentColor" width="17" height="17">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/>
+        </svg>
+        <span><strong>Eslatma:</strong> AI yaratgan testlarni doimo tekshiring. Matematik formulalar va raqamlar xato bo'lishi mumkin — saqlangandan keyin tahrirlash imkoniyati mavjud.</span>
+    </div>
+
+    <a href="{% url 'test_builder:ai_generate' %}" class="btn btn-primary" style="margin-top:20px;background:#15803d;border-color:#15803d">AI bilan yaratish →</a>
+</div>
+
+<!-- ======================================================
+     EKSPORT
+     ====================================================== -->
+<div class="panel" id="export">
+    <div class="h-badge" style="background:#fef3c7;color:#b45309">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="12" height="12">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"/>
+        </svg>
+        HEMIS EKSPORT
+    </div>
+    <h2 style="margin-bottom:6px">HEMIS'ga eksport qilish</h2>
+    <p class="muted" style="margin-bottom:20px">Test tayyor bo'lgach, test sahifasining pastki qismidagi <strong>Eksport</strong> bo'limidan formatni tanlang.</p>
+
+    <div class="h-fmt-cards">
+        <div class="h-fmt-card" style="--fc-border:#2563eb">
+            <div class="h-fmt-card-head" style="background:#2563eb;color:#fff">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.7" stroke="currentColor" width="19" height="19">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/>
+                </svg>
+                Moodle XML <span style="font-size:11px;opacity:.8;margin-left:6px;font-weight:500">Tavsiya etiladi</span>
+            </div>
+            <div class="h-fmt-card-body">
+                <p>$...$ formulalar PNG rasm sifatida joylashadi — HEMIS da to'g'ri ko'rinadi. Rasmlar base64 sifatida ichiga kiritiladi.</p>
+                <div class="h-fmt-card-note">HEMIS: Savollar → Import → <strong>Moodle XML</strong></div>
+            </div>
+        </div>
+        <div class="h-fmt-card" style="--fc-border:#059669">
+            <div class="h-fmt-card-head" style="background:#059669;color:#fff">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.7" stroke="currentColor" width="19" height="19">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/>
+                </svg>
+                HEMIS XML
+            </div>
+            <div class="h-fmt-card-body">
+                <p>HEMIS tizimining ichki XML formati. Formulalar HTML ko'rinishida saqlanadi.</p>
+                <div class="h-fmt-card-note">HEMIS: Savollar → Import → <strong>XML</strong></div>
+            </div>
+        </div>
+        <div class="h-fmt-card" style="--fc-border:#6d28d9">
+            <div class="h-fmt-card-head" style="background:#6d28d9;color:#fff">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.7" stroke="currentColor" width="19" height="19">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5"/>
+                </svg>
+                HEMIS Matn (.txt)
+            </div>
+            <div class="h-fmt-card-body">
+                <p>Oddiy matn formati — <code>++++</code> va <code>====</code> ajratgichlari bilan. Formulasiz savollar uchun.</p>
+                <div class="h-fmt-card-note">HEMIS: Savollar → Import → <strong>TXT</strong></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ======================================================
+     LATEX REFERENCE
+     ====================================================== -->
+<div class="panel" id="latex">
+    <div class="h-badge" style="background:#f1f5f9;color:#334155">∑ LaTeX</div>
+    <h2 style="margin-bottom:6px">LaTeX formulalar — ma'lumotnoma</h2>
+    <p class="muted" style="margin-bottom:18px">Savol matnida <code>$...$</code> (inline) yoki <code>$$...$$</code> (blok) ichiga yozing.</p>
+
+    <table class="h-ltable">
+        <thead><tr><th>Tur</th><th>LaTeX kodi</th><th>Ko'rinishi</th></tr></thead>
+        <tbody>
+            <tr><td>Kasr</td><td><code>\frac{a}{b}</code></td><td>$\frac{a}{b}$</td></tr>
+            <tr><td>Daraja</td><td><code>x^2</code>, <code>x^{10}</code></td><td>$x^2$, $x^{10}$</td></tr>
+            <tr><td>Indeks</td><td><code>x_i</code>, <code>a_{ij}</code></td><td>$x_i$, $a_{ij}$</td></tr>
+            <tr><td>Integral</td><td><code>\int_0^1 x\,dx</code></td><td>$\int_0^1 x\,dx$</td></tr>
+            <tr><td>Yig'indi</td><td><code>\sum_{i=1}^n i</code></td><td>$\sum_{i=1}^n i$</td></tr>
+            <tr><td>Ko'paytma</td><td><code>\prod_{i=1}^n i</code></td><td>$\prod_{i=1}^n i$</td></tr>
+            <tr><td>Ildiz</td><td><code>\sqrt{x}</code>, <code>\sqrt[3]{x}</code></td><td>$\sqrt{x}$, $\sqrt[3]{x}$</td></tr>
+            <tr><td>Limit</td><td><code>\lim_{x \to 0} f(x)</code></td><td>$\lim_{x \to 0} f(x)$</td></tr>
+            <tr><td>Grek harflari</td><td><code>\alpha</code>, <code>\beta</code>, <code>\pi</code>, <code>\sigma</code></td><td>$\alpha$, $\beta$, $\pi$, $\sigma$</td></tr>
+            <tr><td>Cheksizlik</td><td><code>\infty</code></td><td>$\infty$</td></tr>
+            <tr><td>Vektori</td><td><code>\vec{a}</code>, <code>\overrightarrow{AB}</code></td><td>$\vec{a}$, $\overrightarrow{AB}$</td></tr>
+            <tr><td>Matritsa</td><td><code>\begin{pmatrix}a&b\\c&d\end{pmatrix}</code></td><td>$\begin{pmatrix}a&b\\c&d\end{pmatrix}$</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- ======================================================
+     FAQ
+     ====================================================== -->
+<div class="panel" id="faq">
+    <div class="h-badge" style="background:#f1f5f9;color:#475569">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="12" height="12">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z"/>
+        </svg>
+        FAQ
+    </div>
+    <h2 style="margin-bottom:4px">Ko'p so'raladigan savollar</h2>
+
+    <div class="h-faq">
+        <details class="h-faq-item">
+            <summary>Formulalar HEMIS da to'g'ri ko'rinadimi?</summary>
+            <div class="h-faq-body">
+                <p><strong>Moodle XML</strong> formatida eksport qilsangiz — ha. Bu format $...$ va $$...$$ formulalarni avtomatik PNG rasmlarga aylantiradi va fayl ichiga joylaydi. HEMIS bu rasmlarni to'g'ri ko'rsatadi.</p>
+            </div>
+        </details>
+        <details class="h-faq-item">
+            <summary>Savolga va javob variantiga rasm qo'shish mumkinmi?</summary>
+            <div class="h-faq-body">
+                <p>Ha. Savol qo'shish sahifasida "Rasm" maydoniga rasm yuklang. Javob variantlariga ham alohida rasm qo'shish mumkin — matn ixtiyoriy, faqat rasm ham yetarli. Moodle XML eksportda barcha rasmlar base64 sifatida joylashadi.</p>
+            </div>
+        </details>
+        <details class="h-faq-item">
+            <summary>AI noto'g'ri savollar yaratsa nima qilish kerak?</summary>
+            <div class="h-faq-body">
+                <p>Saqlangandan keyin test detail sahifasida har bir savolni tahrirlash (✎) yoki o'chirish mumkin. AI yaratgan testlarni doimo tekshirishni tavsiya etamiz, ayniqsa matematik formulalar va raqamlarni.</p>
+            </div>
+        </details>
+        <details class="h-faq-item">
+            <summary>Bir testda nechta savol bo'lishi mumkin?</summary>
+            <div class="h-faq-body">
+                <p>Cheklov yo'q. Qo'lda istalgancha savol qo'shishingiz mumkin. AI orqali yaratishda 3–30 ta savol generatsiya qilinadi.</p>
+            </div>
+        </details>
+        <details class="h-faq-item">
+            <summary>Test sarlavhasi yoki fan nomini o'zgartirish mumkinmi?</summary>
+            <div class="h-faq-body">
+                <p>Ha. Test detail sahifasida sarlavha yonidagi <strong>✎</strong> (ruchka) tugmasini bosing — test nomi va fan nomini o'zgartirish oynasi ochiladi.</p>
+            </div>
+        </details>
+        <details class="h-faq-item">
+            <summary>Qaysi fayl formatlari qabul qilinadi?</summary>
+            <div class="h-faq-body">
+                <p><strong>DOCX</strong> (Word hujjati), <strong>PDF</strong>, <strong>XLSX/XLS</strong> (Excel jadval), <strong>TXT</strong> (oddiy matn), <strong>PNG / JPG / WEBP</strong> (rasm fayllari). Rasm fayllardan matn GPT-4o Vision orqali taniladi.</p>
+            </div>
+        </details>
+    </div>
+</div>
+
+{% endblock %}

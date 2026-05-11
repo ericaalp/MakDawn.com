@@ -1,0 +1,35 @@
+{% extends 'core/_dashboard_base.html' %}
+
+{% block title %}Testlarim{% endblock %}
+{% block page_title %}Testlarim{% endblock %}
+
+{% block content %}
+<div class="panel-head">
+    <a href="{% url 'test_builder:create_hub' %}" class="btn btn-primary">+ Yangi test</a>
+</div>
+
+{% if tests %}
+<div class="test-grid">
+    {% for test in tests %}
+    <a href="{% url 'test_builder:detail' test.pk %}" class="test-card">
+        <div class="test-card-head">
+            <h3>{{ test.title }}</h3>
+            <span class="badge badge-{{ test.difficulty }}">{{ test.get_difficulty_display }}</span>
+        </div>
+        <p class="muted">{{ test.description|default:"Tavsif yo'q"|truncatechars:80 }}</p>
+        <div class="test-meta">
+            <span>📚 {{ test.subject.name|default:"Fan ko'rsatilmagan" }}</span>
+            <span>❓ {{ test.question_count }} savol</span>
+            <span>⏱ {{ test.time_limit }} daq</span>
+        </div>
+        <div class="muted small">{{ test.updated_at|date:"d.m.Y H:i" }}</div>
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<div class="panel empty">
+    <p class="muted">Hozircha testlar yo'q.</p>
+    <a href="{% url 'test_builder:create_hub' %}" class="btn btn-primary">Birinchi testni yaratish</a>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'core/_dashboard_base.html' %}
+
+{% block title %}Test tahrirlash{% endblock %}
+{% block page_title %}
+    {% if test %}✎ {{ test.title }}{% else %}Yangi test{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="panel" style="max-width:560px;">
+    <form method="post" class="form-stack">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-field">
+            <label>{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}<div class="help">{{ field.help_text }}</div>{% endif %}
+            {% if field.errors %}<div class="err">{{ field.errors.0 }}</div>{% endif %}
+        </div>
+        {% endfor %}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Saqlash</button>
+            {% if test %}
+            <a href="{% url 'test_builder:detail' test.pk %}" class="btn btn-ghost">Bekor qilish</a>
+            {% else %}
+            <a href="{% url 'test_builder:list' %}" class="btn btn-ghost">Bekor qilish</a>
+            {% endif %}
+        </div>
+    </form>
+</div>
+{% endblock %}

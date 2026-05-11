@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Ro'yxatdan o'tish — MaKDawn{% endblock %}
+
+{% block body %}
+<nav class="wiris-nav">
+    <div class="wiris-nav-inner">
+        <a href="{% url 'core:landing' %}" class="wiris-brand">Ma<span>K</span>Dawn</a>
+        <div class="wiris-nav-links"></div>
+        <div class="wiris-nav-cta">
+            <span class="wiris-link">Hisobingiz bormi?</span>
+            <a href="{% url 'accounts:login' %}" class="wiris-btn wiris-btn-outline">Kirish</a>
+        </div>
+    </div>
+</nav>
+
+<div class="auth-wrap" style="background: linear-gradient(135deg, #eaf2ff 0%, #fff 60%);">
+    <div class="auth-card wide">
+        <div class="register-steps">
+            <div class="register-step active"><span class="num">1</span> Shaxsiy ma'lumot</div>
+            <div class="register-sep"></div>
+            <div class="register-step"><span class="num">2</span> Tasdiqlash</div>
+            <div class="register-sep"></div>
+            <div class="register-step"><span class="num">3</span> Ishga kirishish</div>
+        </div>
+
+        <h1>Ro'yxatdan o'tish</h1>
+        <p class="muted">MaKDawn platformasiga o'qituvchi sifatida qo'shiling. Keyingi qadamda tizimga kirasiz.</p>
+
+        <form method="post" class="auth-form grid-2">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-field {% if field.name == 'password1' or field.name == 'password2' %}full{% endif %}">
+                <label>{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}<div class="help" style="font-size:12px;color:var(--w-muted);margin-top:4px;">{{ field.help_text|safe }}</div>{% endif %}
+                {% if field.errors %}<div class="err">{{ field.errors.0 }}</div>{% endif %}
+            </div>
+            {% endfor %}
+            <div class="form-field full" style="display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;">
+                <a href="{% url 'core:landing' %}" class="wiris-link">← Orqaga</a>
+                <button type="submit" class="wiris-btn wiris-btn-primary wiris-btn-lg">Keyingi qadam →</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

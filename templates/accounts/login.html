@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Kirish{% endblock %}
+
+{% block body %}
+<div class="auth-wrap">
+    <div class="auth-card">
+        <h1>Tizimga kirish</h1>
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-field">
+                <label>{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}<div class="err">{{ field.errors.0 }}</div>{% endif %}
+            </div>
+            {% endfor %}
+            {% if form.non_field_errors %}<div class="err">{{ form.non_field_errors.0 }}</div>{% endif %}
+            <button type="submit" class="btn btn-primary btn-lg">Kirish</button>
+        </form>
+        <p class="muted">Hisobingiz yo'qmi? <a href="{% url 'accounts:register' %}">Ro'yxatdan o'tish</a></p>
+    </div>
+</div>
+{% endblock %}

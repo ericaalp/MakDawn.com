@@ -1,0 +1,101 @@
+{% extends 'core/_dashboard_base.html' %}
+{% block title %}Arxiv — MaKDawn{% endblock %}
+{% block page_title %}Yuklangan fayllar arxivi{% endblock %}
+
+{% block content %}
+
+<!-- Filter -->
+<div class="panel" style="padding:14px 20px;">
+    <form method="get" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+        <span style="font-weight:600;font-size:14px;">Holat:</span>
+        <a href="{% url 'archive:list' %}"
+           class="chip {% if not current_status %}chip-active{% endif %}">Barchasi</a>
+        <a href="?status=imported"
+           class="chip {% if current_status == 'imported' %}chip-active{% endif %}chip-imported">Testga aylantirildi</a>
+        <a href="?status=parsed"
+           class="chip {% if current_status == 'parsed' %}chip-active{% endif %}chip-parsed">Parse qilindi</a>
+        <a href="?status=failed"
+           class="chip {% if current_status == 'failed' %}chip-active{% endif %}chip-failed">Xato</a>
+        <a href="?status=pending"
+           class="chip {% if current_status == 'pending' %}chip-active{% endif %}chip-pending">Kutilmoqda</a>
+    </form>
+</div>
+
+{% if page_obj.object_list %}
+<div class="panel" style="padding:0;">
+    <table class="simple-table">
+        <thead>
+            <tr>
+                <th>Fayl nomi</th>
+                <th>Holat</th>
+                <th>Savollar</th>
+                <th>Test</th>
+                <th>Sana</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for job in page_obj %}
+            <tr>
+                <td>
+                    <span style="font-weight:500;">{{ job.original_name }}</span>
+                </td>
+                <td>
+                    <span class="chip chip-{{ job.status }}">{{ job.get_status_display }}</span>
+                </td>
+                <td>{{ job.parsed_count }}</td>
+                <td>
+                    {% if job.test %}
+                        <a href="{% url 'test_builder:detail' job.test.pk %}" class="link">
+                            {{ job.test.title|truncatechars:40 }}
+                        </a>
+                    {% else %}
+                        <span class="muted">—</span>
+                    {% endif %}
+                </td>
+                <td class="muted small">{{ job.created_at|date:"d.m.Y H:i" }}</td>
+                <td>
+                    {% if job.status == 'parsed' %}
+                        <a href="{% url 'converter:preview' job.pk %}" class="link">Preview</a>
+                    {% elif job.status == 'failed' %}
+                        <span class="muted small" title="{{ job.error }}">Xato</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Pagination -->
+{% if page_obj.has_other_pages %}
+<div style="display:flex;gap:8px;justify-content:center;margin-top:20px;">
+    {% if page_obj.has_previous %}
+        <a href="?{% if current_status %}status={{ current_status }}&{% endif %}page={{ page_obj.previous_page_number }}" class="dg-btn">← Oldingi</a>
+    {% endif %}
+    <span style="padding:8px 14px;font-size:14px;color:var(--text-muted);">
+        {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+    </span>
+    {% if page_obj.has_next %}
+        <a href="?{% if current_status %}status={{ current_status }}&{% endif %}page={{ page_obj.next_page_number }}" class="dg-btn">Keyingi →</a>
+    {% endif %}
+</div>
+{% endif %}
+
+{% else %}
+<div class="panel" style="text-align:center;padding:60px 20px;">
+    <p style="font-size:48px;margin-bottom:12px;">📂</p>
+    <p class="muted">
+        {% if current_status %}
+            Ushbu holatdagi fayllar topilmadi.
+        {% else %}
+            Hali hech qanday fayl yuklanmagan.
+        {% endif %}
+    </p>
+    <a href="{% url 'converter:upload' %}" class="dg-btn dg-btn-primary" style="margin-top:16px;">
+        Fayl yuklash
+    </a>
+</div>
+{% endif %}
+
+{% endblock %}

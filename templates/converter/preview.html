@@ -1,0 +1,57 @@
+{% extends 'core/_dashboard_base.html' %}
+
+{% block title %}Preview — {{ job.original_name }}{% endblock %}
+{% block page_title %}Parse natijasi{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+{% endblock %}
+
+{% block content %}
+<div class="panel">
+    <div class="detail-head">
+        <div>
+            <p class="muted">Fayl: <strong>{{ job.original_name }}</strong></p>
+            <p class="muted">Topilgan savollar: <strong>{{ questions|length }}</strong></p>
+            <p class="muted">Test nomi: <strong>{{ title }}</strong></p>
+        </div>
+        <div class="detail-actions">
+            <a href="{% url 'converter:upload' %}" class="btn btn-ghost">← Qayta yuklash</a>
+            {% if questions %}
+            <form method="post" action="{% url 'converter:import' job.pk %}" style="display:inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">✓ Testga aylantirish</button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% if questions %}
+<div class="panel">
+    <ol class="q-list">
+        {% for q in questions %}
+        <li class="q-item">
+            <div class="q-text">{{ q.text }}</div>
+            <ul class="q-choices">
+                {% for c in q.choices %}
+                <li class="{% if c.is_correct %}correct{% endif %}">
+                    {{ c.text }}
+                    {% if c.is_correct %}<span class="ok">✓</span>{% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+    </ol>
+</div>
+{% else %}
+<div class="panel empty">
+    <p class="err">Savollar topilmadi. Format to'g'riligini tekshiring va qayta urinib ko'ring.</p>
+    <a href="{% url 'converter:upload' %}" class="btn btn-primary">Qayta yuklash</a>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'core/_dashboard_base.html' %}
+
+{% block title %}Profil{% endblock %}
+{% block page_title %}Profil{% endblock %}
+
+{% block content %}
+<div class="panel">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;">
+        <h2 style="margin:0;">{{ teacher.get_full_name }}</h2>
+        <a href="{% url 'core:settings' %}" class="dg-btn">Profilni tahrirlash</a>
+    </div>
+    <dl class="info-list" style="margin-top:20px;">
+        <dt>Username</dt><dd>{{ teacher.username }}</dd>
+        <dt>Email</dt><dd>{{ teacher.email|default:"—" }}</dd>
+        <dt>Telefon</dt><dd>{{ teacher.phone|default:"—" }}</dd>
+        <dt>OTM</dt><dd>{{ teacher.university|default:"—" }}</dd>
+        <dt>Fakultet</dt><dd>{{ teacher.faculty|default:"—" }}</dd>
+        <dt>Kafedra</dt><dd>{{ teacher.department|default:"—" }}</dd>
+        <dt>Lavozim</dt><dd>{{ teacher.position|default:"—" }}</dd>
+    </dl>
+</div>
+{% endblock %}
