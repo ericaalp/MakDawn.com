@@ -12,6 +12,7 @@ try:
     SECRET_KEY = env('SECRET_KEY')
     DEBUG = env('DEBUG', default=False, cast=bool)
     ALLOWED_HOSTS = env('ALLOWED_HOSTS', default='localhost', cast=Csv())
+    CSRF_TRUSTED_ORIGINS = env('CSRF_TRUSTED_ORIGINS', default='', cast=Csv())
     ANTHROPIC_API_KEY = env('ANTHROPIC_API_KEY', default='')
     ANTHROPIC_MODEL = env('ANTHROPIC_MODEL', default='claude-sonnet-4-6')
     OPENAI_API_KEY = env('OPENAI_API_KEY', default='')
@@ -20,6 +21,7 @@ except ImportError:
     SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-fallback-key')
     DEBUG = os.environ.get('DEBUG', 'True') == 'True'
     ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
+    CSRF_TRUSTED_ORIGINS = [o for o in os.environ.get('CSRF_TRUSTED_ORIGINS', '').split(',') if o]
     ANTHROPIC_API_KEY = os.environ.get('ANTHROPIC_API_KEY', '')
     ANTHROPIC_MODEL = os.environ.get('ANTHROPIC_MODEL', 'claude-sonnet-4-6')
     OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', '')
